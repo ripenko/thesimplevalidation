@@ -5,7 +5,6 @@ The simple validation service
 [![Build Status](https://travis-ci.org/ripenko/thesimplevalidation.svg?branch=master)](https://travis-ci.org/ripenko/thesimplevalidation)
 
 ## Installation
-
 ```
 npm install --save thesimplevalidation
 ```
