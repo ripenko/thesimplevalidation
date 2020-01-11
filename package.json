@@ -1,0 +1,46 @@
+{
+  "name": "thesimplevalidation",
+  "description": "The simple validation",
+  "version": "1.0.1",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "lint": "tslint index.ts",
+    "pretest": "npm run lint",
+    "test": "jest"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npmjs.org"
+  },
+  "author": "Alexey Ripenko <alexey@ripenko.ru>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ripenko/thesimplevalidation.git"
+  },
+  "keywords": [
+    "validation",
+    "simple",
+    "thesimplevalidation",
+    "isdirty",
+    "typescript",
+    "promise"
+  ],
+  "dependencies": {
+    "lodash.clonedeep": "4.5.0",
+    "lodash.get": "4.4.2",
+    "lodash.isequal": "4.5.0",
+    "lodash.keys": "4.2.0"
+  },
+  "devDependencies": {
+    "@types/lodash.clonedeep": "4.5.6",
+    "@types/lodash.get": "4.4.6",
+    "@types/lodash.isequal": "4.5.5",
+    "@types/lodash.keys": "4.2.6",
+    "@types/jest": "24.0.25",
+    "tslint": "5.20.1",
+    "typescript": "3.7.4",
+    "jest": "24.9.0",
+    "ts-jest": "24.2.0"
+  }
+}
