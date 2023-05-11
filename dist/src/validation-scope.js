@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -35,17 +35,20 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __spreadArrays = (this && this.__spreadArrays) || function () {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-    for (var r = Array(s), k = 0, i = 0; i < il; i++)
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-    return r;
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
 };
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ValidationScope = void 0;
 var lodash_clonedeep_1 = __importDefault(require("lodash.clonedeep"));
 var lodash_get_1 = __importDefault(require("lodash.get"));
 var lodash_isequal_1 = __importDefault(require("lodash.isequal"));
@@ -55,7 +58,7 @@ var ValidationScope = /** @class */ (function () {
         var _this = this;
         this.setup = setup;
         this.useOriginal = function (model) {
-            _this.originalModel = lodash_clonedeep_1.default(model);
+            _this.originalModel = (0, lodash_clonedeep_1.default)(model);
             return _this;
         };
         this.useValidators = function (key) {
@@ -81,14 +84,14 @@ var ValidationScope = /** @class */ (function () {
                         continue;
                     if (key == null)
                         return true;
-                    if (lodash_get_1.default(originalField[index], key) !== lodash_get_1.default(modelField[index], key))
+                    if ((0, lodash_get_1.default)(originalField[index], key) !== (0, lodash_get_1.default)(modelField[index], key))
                         return true;
                 }
                 return false;
             }
             if (key == null)
-                return !lodash_isequal_1.default(_this.originalModel[field], model[field]);
-            return lodash_get_1.default(_this.originalModel[field], key) !== lodash_get_1.default(model[field], key);
+                return !(0, lodash_isequal_1.default)(_this.originalModel[field], model[field]);
+            return (0, lodash_get_1.default)(_this.originalModel[field], key) !== (0, lodash_get_1.default)(model[field], key);
         };
         this.getOriginalProperty = function (field) {
             return _this.originalModel[field];
@@ -135,7 +138,7 @@ var ValidationScope = /** @class */ (function () {
                         validatorResult = _b.sent();
                         isValid = isValid && validatorResult.isValid;
                         if (!validatorResult.isValid)
-                            errors = __spreadArrays(errors, validatorResult.errors);
+                            errors = __spreadArray(__spreadArray([], errors, true), validatorResult.errors, true);
                         _b.label = 3;
                     case 3:
                         _i++;
@@ -156,7 +159,7 @@ var ValidationScope = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        properties = lodash_keys_1.default(this.setup.getModel());
+                        properties = (0, lodash_keys_1.default)(this.setup.getModel());
                         result = {
                             isValid: true,
                             errors: [],
@@ -173,7 +176,7 @@ var ValidationScope = /** @class */ (function () {
                         result.isValid = result.isValid && propertyValidationResult.isValid;
                         result.properties[property] = propertyValidationResult;
                         if (!propertyValidationResult.isValid)
-                            result.errors = __spreadArrays(result.errors, propertyValidationResult.errors);
+                            result.errors = __spreadArray(__spreadArray([], result.errors, true), propertyValidationResult.errors, true);
                         _a.label = 3;
                     case 3:
                         _i++;
@@ -188,7 +191,7 @@ var ValidationScope = /** @class */ (function () {
                 }
             });
         }); };
-        this.originalModel = lodash_clonedeep_1.default(setup.getModel());
+        this.originalModel = (0, lodash_clonedeep_1.default)(setup.getModel());
         this.modelInfo = {};
     }
     return ValidationScope;

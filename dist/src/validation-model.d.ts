@@ -1,3 +1,3 @@
-export declare type ValidationModel<TModel> = {
+export type ValidationModel<TModel> = {
     [K in keyof TModel]: boolean;
 };

@@ -1,3 +1,3 @@
-export declare type ValidationErrorsModel<TModel> = {
+export type ValidationErrorsModel<TModel> = {
     [k in keyof TModel]: string[];
 };

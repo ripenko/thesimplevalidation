@@ -1,12 +1,10 @@
 {
   "name": "thesimplevalidation",
   "description": "The simple validation",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "./dist/index.js",
   "scripts": {
     "build": "tsc",
-    "lint": "tslint index.ts",
-    "pretest": "npm run lint",
     "test": "jest"
   },
   "publishConfig": {
@@ -33,14 +31,13 @@
     "lodash.keys": "4.2.0"
   },
   "devDependencies": {
-    "@types/lodash.clonedeep": "4.5.6",
-    "@types/lodash.get": "4.4.6",
-    "@types/lodash.isequal": "4.5.5",
-    "@types/lodash.keys": "4.2.6",
-    "@types/jest": "24.0.25",
-    "tslint": "5.20.1",
-    "typescript": "3.7.4",
-    "jest": "24.9.0",
-    "ts-jest": "24.2.0"
+    "@types/lodash.clonedeep": "4.5.7",
+    "@types/lodash.get": "4.4.7",
+    "@types/lodash.isequal": "4.5.6",
+    "@types/lodash.keys": "4.2.7",
+    "@types/jest": "29.5.1",
+    "typescript": "5.0.4",
+    "jest": "29.5.0",
+    "ts-jest": "29.1.0"
   }
 }

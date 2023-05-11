@@ -11,9 +11,9 @@ export declare class ValidationScope<TModel extends {}> {
     });
     useOriginal: (model: TModel) => ValidationScope<TModel>;
     useValidators: <K extends keyof TModel>(key: K, ...validators: Validator<TModel, K, import("./validator-setup").IValidatorSetup<TModel, K>>[]) => ValidationScope<TModel>;
-    isPropertyDirty: (field: keyof TModel, key?: string) => boolean;
+    isPropertyDirty: (field: keyof TModel, key?: string | null) => boolean;
     getOriginalProperty: <K extends keyof TModel>(field: K) => TModel[K];
-    isDirty: (...fields: (keyof TModel)[]) => boolean;
+    isDirty: (...fields: Array<keyof TModel>) => boolean;
     isPropertyValid: <K extends keyof TModel>(field: K) => Promise<IValidationPropertyResult>;
     isValid: () => Promise<IValidationResult<TModel>>;
 }
