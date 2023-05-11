@@ -1,7 +1,7 @@
 {
   "name": "thesimplevalidation",
   "description": "The simple validation",
-  "version": "1.0.2",
+  "version": "1.2.0",
   "main": "./dist/index.js",
   "scripts": {
     "build": "tsc",
