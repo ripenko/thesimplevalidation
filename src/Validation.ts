@@ -4,7 +4,7 @@ import { ValidationPropertyResult } from "./ValidationPropertyResult";
 import { ValidationResult } from "./ValidationResult";
 import { Validator } from "./Validator";
 
-export class ValidationScope<TModel extends {}> {
+export class Validation<TModel extends {}> {
   private originalModel: TModel;
   private modelInfo: {
     [K in keyof TModel]?: {
@@ -17,15 +17,20 @@ export class ValidationScope<TModel extends {}> {
     this.modelInfo = {};
   }
 
-  public useOriginal = (model: TModel): ValidationScope<TModel> => {
+  public useOriginal = (model: TModel): Validation<TModel> => {
     this.originalModel = structuredClone(model);
+    return this;
+  };
+
+  public useNoValidators = (): Validation<TModel> => {
+    this.modelInfo = {};
     return this;
   };
 
   public useValidators = <K extends keyof TModel>(
     key: K,
     ...validators: Array<Validator<TModel, K>>
-  ): ValidationScope<TModel> => {
+  ): Validation<TModel> => {
     this.modelInfo[key] = {
       validators: validators,
     };
