@@ -1,9 +1,9 @@
-export { ValidationScope } from "./validation-scope";
-export { ValidationErrorsModel } from "./validation-errors-model";
-export { ValidationModel } from "./validation-model";
-export { IValidationPropertyResult } from "./validation-property-result";
-export { IValidationResult } from "./validation-result";
-export { Validator } from "./validator";
-export { IValidatorSetup } from "./validator-setup";
+export { ValidationScope } from "./ValidationScope";
+export { ValidationErrorsModel } from "./ValidationErrorsModel";
+export { ValidationModel } from "./ValidationModel";
+export { ValidationPropertyResult } from "./ValidationPropertyResult";
+export { ValidationResult } from "./ValidationResult";
+export { Validator } from "./Validator";
+export { ValidatorSetup } from "./ValidatorSetup";
 
 export * from "./validators";
