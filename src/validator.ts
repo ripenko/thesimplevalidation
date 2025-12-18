@@ -21,7 +21,10 @@ export abstract class Validator<
     model: TModel,
     field: K
   ): Promise<ValidationPropertyResult> => {
-    if (this.setup.isDisabled != null && this.setup.isDisabled(value)) {
+    if (
+      this.setup.isDisabled != null &&
+      this.setup.isDisabled(value, model, field)
+    ) {
       return {
         isValid: true,
         errors: [],
@@ -36,7 +39,7 @@ export abstract class Validator<
 
     if (result.isValid !== true) {
       if (this.setup.getErrors != null) {
-        result.errors = this.setup.getErrors(value);
+        result.errors = this.setup.getErrors(value, model, field);
       } else {
         result.errors = this.getErrors(value, model, field);
       }

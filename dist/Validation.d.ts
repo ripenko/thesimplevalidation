@@ -4,7 +4,11 @@ import { Validator } from "./Validator";
 export declare class Validation<TModel extends {}> {
     private originalModel;
     private modelInfo;
+    private isDisabled;
     constructor(originalModel: TModel);
+    disable: () => Validation<TModel>;
+    enable: () => Validation<TModel>;
+    getisEnabled: () => boolean;
     useOriginal: (model: TModel) => Validation<TModel>;
     useNoValidators: () => Validation<TModel>;
     useValidators: <K extends keyof TModel>(key: K, ...validators: Array<Validator<TModel, K>>) => Validation<TModel>;

@@ -6,7 +6,8 @@ export class Validator {
             return [`${field.toString()}.${this.name}`];
         };
         this.isValid = async (value, model, field) => {
-            if (this.setup.isDisabled != null && this.setup.isDisabled(value)) {
+            if (this.setup.isDisabled != null &&
+                this.setup.isDisabled(value, model, field)) {
                 return {
                     isValid: true,
                     errors: [],
@@ -15,7 +16,7 @@ export class Validator {
             const result = await this.isValidInternal(value, model, field);
             if (result.isValid !== true) {
                 if (this.setup.getErrors != null) {
-                    result.errors = this.setup.getErrors(value);
+                    result.errors = this.setup.getErrors(value, model, field);
                 }
                 else {
                     result.errors = this.getErrors(value, model, field);

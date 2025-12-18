@@ -11,11 +11,26 @@ export class Validation<TModel extends {}> {
       validators: Array<Validator<TModel, K>>;
     };
   };
+  private isDisabled: boolean = false;
 
   constructor(originalModel: TModel) {
     this.originalModel = structuredClone(originalModel);
     this.modelInfo = {};
   }
+
+  public disable = (): Validation<TModel> => {
+    this.isDisabled = true;
+    return this;
+  };
+
+  public enable = (): Validation<TModel> => {
+    this.isDisabled = false;
+    return this;
+  };
+
+  public getisEnabled = (): boolean => {
+    return !this.isDisabled;
+  };
 
   public useOriginal = (model: TModel): Validation<TModel> => {
     this.originalModel = structuredClone(model);
@@ -42,6 +57,8 @@ export class Validation<TModel extends {}> {
     field: keyof TModel,
     key: string | null = null
   ): boolean => {
+    if (this.isDisabled === true) return false;
+
     const originalField = this.originalModel[field];
     const modelField = model[field];
     if (Array.isArray(originalField) && Array.isArray(modelField)) {

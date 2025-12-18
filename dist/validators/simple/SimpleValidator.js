@@ -3,12 +3,8 @@ export class SimpleValidator extends Validator {
     constructor(setup) {
         super("SimpleValidator", setup);
     }
-    async isValidInternal(_value) {
-        const isValid = this.setup.getValidation();
-        return {
-            isValid: isValid,
-            errors: [],
-        };
+    isValidInternal(value, model, field) {
+        return this.setup.getValidation(value, model, field);
     }
 }
 //# sourceMappingURL=SimpleValidator.js.map

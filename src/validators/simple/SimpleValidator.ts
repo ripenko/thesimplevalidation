@@ -11,14 +11,11 @@ export class SimpleValidator<TModel, K extends keyof TModel> extends Validator<
     super("SimpleValidator", setup);
   }
 
-  public async isValidInternal(
-    _value: TModel[K]
+  public isValidInternal(
+    value: TModel[K],
+    model: TModel,
+    field: K
   ): Promise<ValidationPropertyResult> {
-    const isValid: boolean = this.setup.getValidation();
-
-    return {
-      isValid: isValid,
-      errors: [],
-    };
+    return this.setup.getValidation(value, model, field);
   }
 }

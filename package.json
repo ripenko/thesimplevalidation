@@ -1,7 +1,7 @@
 {
   "name": "thesimplevalidation",
   "description": "The simple validation",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
@@ -9,7 +9,9 @@
   ],
   "scripts": {
     "build": "tsc",
-    "test": "jest"
+    "test": "vitest",
+    "test:run": "vitest run",
+    "coverage": "vitest run --coverage"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
@@ -35,9 +37,8 @@
   "devDependencies": {
     "@types/lodash.get": "4.4.9",
     "@types/lodash.isequal": "4.5.8",
-    "@types/jest": "30.0.0",
+    "@vitest/coverage-v8": "^4.0.9",
     "typescript": "5.9.3",
-    "jest": "30.2.0",
-    "ts-jest": "29.4.5"
+    "vitest": "4.0.9"
   }
 }

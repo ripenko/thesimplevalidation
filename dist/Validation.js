@@ -2,6 +2,18 @@ import get from "lodash.get";
 import isEqual from "lodash.isequal";
 export class Validation {
     constructor(originalModel) {
+        this.isDisabled = false;
+        this.disable = () => {
+            this.isDisabled = true;
+            return this;
+        };
+        this.enable = () => {
+            this.isDisabled = false;
+            return this;
+        };
+        this.getisEnabled = () => {
+            return !this.isDisabled;
+        };
         this.useOriginal = (model) => {
             this.originalModel = structuredClone(model);
             return this;
@@ -17,6 +29,8 @@ export class Validation {
             return this;
         };
         this.isPropertyDirty = (model, field, key = null) => {
+            if (this.isDisabled === true)
+                return false;
             const originalField = this.originalModel[field];
             const modelField = model[field];
             if (Array.isArray(originalField) && Array.isArray(modelField)) {
