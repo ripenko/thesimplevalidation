@@ -5,7 +5,12 @@ export declare class Validation<TModel extends {}> {
     private originalModel;
     private modelInfo;
     private isDisabled;
-    constructor(originalModel: TModel);
+    constructor(originalModel: TModel, modelInfo?: {
+        [K in keyof TModel]?: {
+            validators?: Array<Validator<TModel, K>>;
+            key?: string;
+        };
+    });
     disable: () => Validation<TModel>;
     enable: () => Validation<TModel>;
     getisEnabled: () => boolean;

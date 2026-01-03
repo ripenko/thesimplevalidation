@@ -1,7 +1,7 @@
 import get from "lodash.get";
 import isEqual from "lodash.isequal";
 export class Validation {
-    constructor(originalModel) {
+    constructor(originalModel, modelInfo) {
         this.isDisabled = false;
         this.disable = () => {
             this.isDisabled = true;
@@ -19,11 +19,14 @@ export class Validation {
             return this;
         };
         this.useNoValidators = () => {
-            this.modelInfo = {};
+            for (const field in this.modelInfo) {
+                delete this.modelInfo[field]?.validators;
+            }
             return this;
         };
         this.useValidators = (key, ...validators) => {
             this.modelInfo[key] = {
+                ...this.modelInfo?.[key],
                 validators: validators,
             };
             return this;
@@ -31,6 +34,7 @@ export class Validation {
         this.isPropertyDirty = (model, field, key = null) => {
             if (this.isDisabled === true)
                 return false;
+            const fieldKey = key ?? this.modelInfo[field]?.key ?? null;
             const originalField = this.originalModel[field];
             const modelField = model[field];
             if (Array.isArray(originalField) && Array.isArray(modelField)) {
@@ -39,16 +43,17 @@ export class Validation {
                 for (let index = 0; index < originalField.length; index++) {
                     if (originalField[index] === modelField[index])
                         continue;
-                    if (key == null)
+                    if (fieldKey == null)
                         return true;
-                    if (get(originalField[index], key) !== get(modelField[index], key))
+                    if (get(originalField[index], fieldKey) !==
+                        get(modelField[index], fieldKey))
                         return true;
                 }
                 return false;
             }
-            if (key == null)
+            if (fieldKey == null)
                 return !isEqual(this.originalModel[field], model[field]);
-            return get(this.originalModel[field], key) !== get(model[field], key);
+            return (get(this.originalModel[field], fieldKey) !== get(model[field], fieldKey));
         };
         this.getOriginalProperty = (field) => {
             return this.originalModel[field];
@@ -107,7 +112,7 @@ export class Validation {
             return result;
         };
         this.originalModel = structuredClone(originalModel);
-        this.modelInfo = {};
+        this.modelInfo = modelInfo ?? {};
     }
 }
 //# sourceMappingURL=Validation.js.map

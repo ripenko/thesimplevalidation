@@ -8,14 +8,23 @@ export class Validation<TModel extends {}> {
   private originalModel: TModel;
   private modelInfo: {
     [K in keyof TModel]?: {
-      validators: Array<Validator<TModel, K>>;
+      validators?: Array<Validator<TModel, K>>;
+      key?: string | null;
     };
   };
   private isDisabled: boolean = false;
 
-  constructor(originalModel: TModel) {
+  constructor(
+    originalModel: TModel,
+    modelInfo?: {
+      [K in keyof TModel]?: {
+        validators?: Array<Validator<TModel, K>>;
+        key?: string;
+      };
+    }
+  ) {
     this.originalModel = structuredClone(originalModel);
-    this.modelInfo = {};
+    this.modelInfo = modelInfo ?? {};
   }
 
   public disable = (): Validation<TModel> => {
@@ -38,7 +47,9 @@ export class Validation<TModel extends {}> {
   };
 
   public useNoValidators = (): Validation<TModel> => {
-    this.modelInfo = {};
+    for (const field in this.modelInfo) {
+      delete this.modelInfo[field]?.validators;
+    }
     return this;
   };
 
@@ -47,6 +58,7 @@ export class Validation<TModel extends {}> {
     ...validators: Array<Validator<TModel, K>>
   ): Validation<TModel> => {
     this.modelInfo[key] = {
+      ...this.modelInfo?.[key],
       validators: validators,
     };
     return this;
@@ -58,6 +70,7 @@ export class Validation<TModel extends {}> {
     key: string | null = null
   ): boolean => {
     if (this.isDisabled === true) return false;
+    const fieldKey: string | null = key ?? this.modelInfo[field]?.key ?? null;
 
     const originalField = this.originalModel[field];
     const modelField = model[field];
@@ -65,14 +78,20 @@ export class Validation<TModel extends {}> {
       if (originalField.length !== modelField.length) return true;
       for (let index = 0; index < originalField.length; index++) {
         if (originalField[index] === modelField[index]) continue;
-        if (key == null) return true;
-        if (get(originalField[index], key) !== get(modelField[index], key))
+        if (fieldKey == null) return true;
+        if (
+          get(originalField[index], fieldKey) !==
+          get(modelField[index], fieldKey)
+        )
           return true;
       }
       return false;
     }
-    if (key == null) return !isEqual(this.originalModel[field], model[field]);
-    return get(this.originalModel[field], key) !== get(model[field], key);
+    if (fieldKey == null)
+      return !isEqual(this.originalModel[field], model[field]);
+    return (
+      get(this.originalModel[field], fieldKey) !== get(model[field], fieldKey)
+    );
   };
 
   public getOriginalProperty = <K extends keyof TModel>(
