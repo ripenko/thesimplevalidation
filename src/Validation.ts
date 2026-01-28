@@ -69,7 +69,6 @@ export class Validation<TModel extends {}> {
     field: keyof TModel,
     key: string | null = null,
   ): boolean => {
-    if (this.isDisabled === true) return false;
     const fieldKey: string | null = key ?? this.modelInfo[field]?.key ?? null;
 
     const originalField = this.originalModel[field];

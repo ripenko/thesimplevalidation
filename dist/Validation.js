@@ -32,8 +32,6 @@ export class Validation {
             return this;
         };
         this.isPropertyDirty = (model, field, key = null) => {
-            if (this.isDisabled === true)
-                return false;
             const fieldKey = key ?? this.modelInfo[field]?.key ?? null;
             const originalField = this.originalModel[field];
             const modelField = model[field];
