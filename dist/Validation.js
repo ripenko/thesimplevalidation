@@ -43,11 +43,15 @@ export class Validation {
                 for (let index = 0; index < originalField.length; index++) {
                     if (originalField[index] === modelField[index])
                         continue;
-                    if (fieldKey == null)
-                        return true;
+                    if (fieldKey == null) {
+                        if (!isEqual(originalField[index], modelField[index]))
+                            return true;
+                        continue;
+                    }
                     if (get(originalField[index], fieldKey) !==
-                        get(modelField[index], fieldKey))
+                        get(modelField[index], fieldKey)) {
                         return true;
+                    }
                 }
                 return false;
             }

@@ -21,7 +21,7 @@ export class Validation<TModel extends {}> {
         validators?: Array<Validator<TModel, K>>;
         key?: string;
       };
-    }
+    },
   ) {
     this.originalModel = structuredClone(originalModel);
     this.modelInfo = modelInfo ?? {};
@@ -67,7 +67,7 @@ export class Validation<TModel extends {}> {
   public isPropertyDirty = (
     model: TModel,
     field: keyof TModel,
-    key: string | null = null
+    key: string | null = null,
   ): boolean => {
     if (this.isDisabled === true) return false;
     const fieldKey: string | null = key ?? this.modelInfo[field]?.key ?? null;
@@ -76,14 +76,21 @@ export class Validation<TModel extends {}> {
     const modelField = model[field];
     if (Array.isArray(originalField) && Array.isArray(modelField)) {
       if (originalField.length !== modelField.length) return true;
+
       for (let index = 0; index < originalField.length; index++) {
         if (originalField[index] === modelField[index]) continue;
-        if (fieldKey == null) return true;
+
+        if (fieldKey == null) {
+          if (!isEqual(originalField[index], modelField[index])) return true;
+          continue;
+        }
+
         if (
           get(originalField[index], fieldKey) !==
           get(modelField[index], fieldKey)
-        )
+        ) {
           return true;
+        }
       }
       return false;
     }
@@ -95,7 +102,7 @@ export class Validation<TModel extends {}> {
   };
 
   public getOriginalProperty = <K extends keyof TModel>(
-    field: K
+    field: K,
   ): TModel[K] => {
     return this.originalModel[field];
   };
@@ -116,7 +123,7 @@ export class Validation<TModel extends {}> {
 
   public isPropertyValid = async <K extends keyof TModel>(
     model: TModel,
-    field: K
+    field: K,
   ): Promise<ValidationPropertyResult> => {
     if (
       this.modelInfo[field] &&
