@@ -14,9 +14,17 @@
     "strict": true,
     "allowSyntheticDefaultImports": true,
     "target": "ES2021",
-    "lib": ["es2021"],
+    "lib": [
+      "ES2021",
+      "DOM"
+    ],
     "skipLibCheck": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "src/**/__tests__"]
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "src/**/__tests__"
+  ]
 }
